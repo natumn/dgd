@@ -1,23 +1,15 @@
 package main
 
-import "os"
-
-type CLI struct {
-	version string
-}
+import (
+	"os"
+)
 
 func main() {
-	cli := NewCLI()
+	subCmd := os.Args[1]
+	args := os.Args[2:]
+
+	cli := New()
 	os.Exit(
-		cli.Run(os.Args[1:]))
-}
-
-func (c *CLI) Run(args []string) int {
-	return 0
-}
-
-func NewCLI() CLI {
-	return CLI{
-		version: "1.0.0",
-	}
+		cli.Run(subCmd, args),
+	)
 }
