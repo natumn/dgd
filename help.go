@@ -1,49 +1,20 @@
 package main
 
-import "fmt"
-
-type helpCmd struct {
-	CmdName string
-}
-
-func NewHelpCmd(cmdName string) Command {
-	return &helpCmd{
-		CmdName: cmdName,
-	}
-}
-
 const usage = `
-D-dog: cli tool for cloud datastore entity and index documentation automatically generated from source code.
+NAME:
+   ddog - cli tool for cloud datastore entity and index documentation automatically generated from source code.
 
-Usage: %s [sub command] [options]...
+USAGE: 
+   %s [files path]... [command options]...
 
-sub commands:
-	
-	create: create document from source code.
-	Options: 
-		--package <package name>      create document into package scope.
+   Files:
+      *.go files:  create documentation from source code in the specified Go file.
 
-		--file 	  <file name>         create document form source code in this file.
+      directory:   create documentation from source code in this package
 
-		--type    <output file type>  ducument file type. ex html, json.
+  Options: 
+      --type    <output file type>  document file type. ex html, json etc...
 
-		--output  <file name>         ducument output file name.
-
-
-	show: display document on terminal.
-	Options: 
-		--package <package name>      display document into package scope.
-
-		--file    <file name>         display document form source code in this file.
-
-		--type    <output file type>  ducument file type. ex html, json.
-
-
-	help: show usage this command.
+      --help                        show this command usage.
 
 `
-
-func (d *helpCmd) Run(args []string) int {
-	fmt.Printf(usage, d.CmdName)
-	return 0
-}

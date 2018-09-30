@@ -17,6 +17,15 @@ func main() {
 		Name:      "Rindou Mikoto",
 		CreatedAt: time.Now(),
 	}
+	desc := `
+鬼の国の女王、竜胆 尊じゃ。
+
+ばあちゃるらいばあとして皆を楽しませられるように尽力する所存じゃ
+わらわにそちらの世界のことをたくさん教えてくれ
+`
+
+	profile := NewProfile(user.ID, desc)
 
 	fmt.Printf("%+v\n", user)
+	fmt.Printf("%+v\n", profile)
 }

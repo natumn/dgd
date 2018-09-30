@@ -24,26 +24,13 @@ type Command interface {
 
 func (c *CLI) Run() int {
 	if len(os.Args) < 2 {
-		return exit(1)
+		fmt.Printf(usage, c.Name)
+		return 0
 	}
 
-	subCmd := os.Args[1]
-	args := os.Args[2:]
+	args := os.Args[1:]
 
-	var cmd Command
-	switch subCmd {
-	case "help":
-		cmd = NewHelpCmd(c.Name)
-	case "create":
-		cmd = NewDocCmd()
-	case "show":
-		cmd = NewViewerCmd()
-	case "version":
-		cmd = NewVersionCmd(c.Name, c.Version)
-	default:
-		// exceptinal command, return standard output error.
-		return exit(1)
-	}
+	cmd := NewCmd()
 
 	return cmd.Run(args)
 }
