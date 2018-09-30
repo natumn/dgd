@@ -2,15 +2,19 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
-var src = `package p
-import _ "log"
-func add(n, m int) {}
-`
-
 type CLI struct {
-	version string
+	Version string
+	Name    string
+}
+
+func New() CLI {
+	return CLI{
+		Version: "0.1.0",
+		Name:    "ddog",
+	}
 }
 
 type Command interface {
@@ -18,21 +22,24 @@ type Command interface {
 	// Exit(status int) int
 }
 
-func New() CLI {
-	return CLI{
-		version: "1.0.0",
+func (c *CLI) Run() int {
+	if len(os.Args) < 2 {
+		return exit(1)
 	}
-}
 
-func (c *CLI) Run(subCmd string, args []string) int {
+	subCmd := os.Args[1]
+	args := os.Args[2:]
+
 	var cmd Command
 	switch subCmd {
 	case "help":
-		cmd = NewDescCmd()
+		cmd = NewHelpCmd(c.Name)
 	case "create":
 		cmd = NewDocCmd()
 	case "show":
 		cmd = NewViewerCmd()
+	case "version":
+		cmd = NewVersionCmd(c.Name, c.Version)
 	default:
 		// exceptinal command, return standard output error.
 		return exit(1)
@@ -42,6 +49,6 @@ func (c *CLI) Run(subCmd string, args []string) int {
 }
 
 func exit(status int) int {
-	fmt.Printf("failed: unknown command\n")
+	fmt.Printf("Failed: unknown command\n")
 	return status
 }

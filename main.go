@@ -5,11 +5,9 @@ import (
 )
 
 func main() {
-	subCmd := os.Args[1]
-	args := os.Args[2:]
+	app := New()
 
-	cli := New()
 	os.Exit(
-		cli.Run(subCmd, args),
+		app.Run(),
 	)
 }

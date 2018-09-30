@@ -2,10 +2,14 @@ package main
 
 import "fmt"
 
-type viewerCmd struct{}
+type viewerCmd struct {
+	Name string
+}
 
 func NewViewerCmd() Command {
-	return &viewerCmd{}
+	return &viewerCmd{
+		Name: "show",
+	}
 }
 
 func (d *viewerCmd) Run(args []string) int {

@@ -1,7 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
+
+type DatastoreUser struct {
+	ID        int64     `datastore:"-" json:"id"`
+	Name      string    `datastore:"name" json:"name"`
+	CreatedAt time.Time `json:"createdAt"`
+}
 
 func main() {
-	fmt.Println("vim-go")
+	user := &DatastoreUser{
+		ID:        12345,
+		Name:      "Rindou Mikoto",
+		CreatedAt: time.Now(),
+	}
+
+	fmt.Printf("%+v\n", user)
 }
