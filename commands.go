@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"strings"
 
 	"github.com/natumn/ddog/parser"
 )
@@ -16,36 +15,31 @@ func NewCmd() Command {
 	return &Cmd{}
 }
 
-type Files []string
-
-func (f *Files) String() string { return strings.Join(*f, ",") }
-
-func (f *Files) Set(files string) error {
-	*f = strings.Split(files, ",")
-	return nil
-}
-
 type document struct {
 	Output string
 	Type   string
-	Files  Files
+	Files  []string
 }
 
 func (d *Cmd) Run(args []string) int {
 	var doc document
+	var help, version bool
 
-	// TODO: make short flag(ex. package is -p)
+	// TODO: make short flag(ex. --type is -t)
 	fs := flag.NewFlagSet(d.name, flag.ContinueOnError)
-	fs.StringVar(&doc.Output, "output", "nosql.html",
-		"out put file")
-	fs.StringVar(&doc.Type, "type", "html",
-		"file type")
+	fs.StringVar(&doc.Type, "type", "html", "specify file type")
+	fs.BoolVar(&help, "help", false, "display the command usage")
+	fs.BoolVar(&version, "version", false, "display the command version")
 
-	fs.Parse(args)
-	files := fs.Args()
+	if err := fs.Parse(args); err != nil {
+		fmt.Printf("Failed parse flags: %v\n", err)
+		return 1
+	}
+
+	doc.Files = fs.Args()
 
 	// TODO: running source code parse step
-	_, err := parser.Parse(files)
+	_, err := parser.Parse(doc.Files)
 	if err != nil {
 		fmt.Printf("Failed parse files: %v\n", err)
 		return 1

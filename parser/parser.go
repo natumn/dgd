@@ -8,10 +8,14 @@ import (
 	"os"
 )
 
-type ParsedData struct{}
+// Entity is cloud datastore structures is required for making documentation.
+// TODO: entityの表現に必要なものを考える
+type Entity struct {
+}
 
-func Parse(files []string) (*ParsedData, error) {
-	pd := ParsedData{}
+// Parse parse Go files and return cloud datastore entity structure.
+func Parse(files []string) ([]*Entity, error) {
+	entitys := []*Entity{}
 	fmt.Printf("Files: %+v\n", files)
 
 	for _, file := range files {
@@ -48,5 +52,5 @@ func Parse(files []string) (*ParsedData, error) {
 		}
 	}
 
-	return &pd, nil
+	return entitys, nil
 }

@@ -5,16 +5,15 @@ NAME:
    ddog - cli tool for cloud datastore entity and index documentation automatically generated from source code.
 
 USAGE: 
-   %s [files path]... [command options]...
+   %s [options] <files>... 
 
    Files:
-      *.go files:  create documentation from source code in the specified Go file.
+      Go files:  create documentation from source code in the specified Go file.
 
-      directory:   create documentation from source code in this package
+   Options: 
+      --type <output file type>   specify document file type. For example, html, json etc...
 
-  Options: 
-      --type    <output file type>  document file type. ex html, json etc...
-
-      --help                        show this command usage.
-
+      --help                      show this command usage.
+			
+      --version                   show ddog version.
 `

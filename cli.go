@@ -23,13 +23,13 @@ type Command interface {
 }
 
 func (c *CLI) Run() int {
+	// TODO: ddogのコマンドのみ場合はhelpを出すか、すべてとしてプロジェクト全体のドキュメントを作成するか
 	if len(os.Args) < 2 {
 		fmt.Printf(usage, c.Name)
 		return 0
 	}
 
 	args := os.Args[1:]
-
 	cmd := NewCmd()
 
 	return cmd.Run(args)
