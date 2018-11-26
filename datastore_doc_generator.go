@@ -22,7 +22,10 @@ var Analyzer = &analysis.Analyzer{
 	Requires: []*analysis.Analyzer{inspect.Analyzer, commentmap.Analyzer, structtag.Analyzer},
 }
 
-var annotation = "datastore-gen-doc: true"
+var (
+	annotation     = "datastore-gen-doc: true"
+	annotationFlag = false
+)
 
 func init() {
 	Analyzer.Flags.StringVar(&annotation, "annotation", annotation, "annotation for explicit assignment")
@@ -37,6 +40,7 @@ func run(pass *analysis.Pass) (interface{}, error) {
 		(*ast.GenDecl)(nil),
 	}
 
+	// TODO: annotationと同じコメントと見つけた下の構造体の型を取得する
 	inspect.WithStack(nodeFilter, func(n ast.Node, push bool, stack []ast.Node) bool {
 		if !push {
 			return false
@@ -51,10 +55,19 @@ func run(pass *analysis.Pass) (interface{}, error) {
 			*/
 
 			if cmaps.Annotated(n, annotation) {
-				fmt.Printf("Get annotation!: %+v\n", n)
+				fmt.Printf("Get annotation!: %+v\n", n.Doc)
+				// annotationFlag = true
 				return true
 			}
 
+		case *ast.StructType:
+			/*
+				if !annotationFlag {
+					return true
+				}
+			*/
+			fmt.Printf("Get StructType: %+v", n)
+			// nnotationFlag = false
 		}
 		return false
 	})
