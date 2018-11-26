@@ -1,4 +1,4 @@
-# ddog
+# dgd
 
 ## Description
 
@@ -7,7 +7,7 @@ cli tool for noSQL database such as cloud datastore entity and index documentati
 ## Installation
 
 ```
-$ go get github.com/natumn/ddog
+$ go get github.com/natumn/dgd
 ```
 
 
@@ -15,7 +15,7 @@ $ go get github.com/natumn/ddog
 
 Please see 
 ```
-$ ddog help
+$ dgd help
 ``` 
 
 ## License
